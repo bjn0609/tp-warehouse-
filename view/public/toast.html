@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body style="text-align:center;margin-top:300px;">
+
+<!--提示-->
+<div class="d-flex justify-content-center align-items-center vw-100 vh-100">
+    <div class="toast show mb-5 pl-3 pr-3">
+        <div class="toast-header">
+            <strong style="font-size:20px">● 系统提示:</strong>
+        </div>
+        <div class="toast-body">
+            <ol class="text-danger">
+                {volist name="infos" id="item"}
+                <li>{$item}</li>
+                {/volist}
+            </ol>
+            <a href="{$url_path}" class="layui-btn">{$url_text}</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

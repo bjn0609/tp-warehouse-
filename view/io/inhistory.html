@@ -1,0 +1,40 @@
+{extend name="public/base"}
+
+{block name="title"}入库记录{/block}
+
+{block name="main"}
+
+
+<table id="in" lay-filter="test"></table>
+
+<script src="/layui/layui.js"></script>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#in'
+            ,height: 889
+            ,url: '/io/list1' //数据接口
+            ,page: {
+                limit: 20
+            } //开启分页
+            ,cols: [[ //表头
+                {field: 'code', title: '编码', width:200, sort: true, fixed: 'left'}
+                ,{field: 'name', title: '名称', width:200}
+                ,{field: 'type', title: '规格', width:200}
+                ,{field: 'unit', title: '单位', width:155}
+                ,{field: 'price', title: '入库单价', width: 150}
+                ,{field: 'sup', title: '供应商', width: 200}
+                ,{field: 'innum', title: '入库量', width: 200}
+                ,{field: 'inman', title: '入库人', width: 200}
+                ,{field: 'intime', title: '入库时间', width: 200, sort: true}
+                ,{field: 'incode', title: '入库批号', width: 200, sort: true}
+            ]]
+        });
+    });
+</script>
+
+{/block}
+

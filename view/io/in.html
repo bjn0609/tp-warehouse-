@@ -1,0 +1,75 @@
+
+{extend name="public/base"}
+
+{block name="title"}入库{/block}
+
+{block name="main"}
+
+    <form action="/io/savein" method="post" class="layui-form" style="width: 617px;">
+        <fieldset class="w-75">
+
+    <div class="layui-form-item" style="margin-top: 30px;">
+        <label for="code" class="layui-form-label">编码</label>
+        <div class="layui-input-block">
+            <input type="text" id="code" name="code" class="layui-input" placeholder="请输入编码">
+        </div>
+    </div>
+
+    <div class=class="layui-form-item" style="margin-top: 30px;">
+        <label for="innum" class="layui-form-label">数量</label>
+        <div class="layui-input-block">
+            <input type="text" id="innum" name="innum" class="layui-input" placeholder="请输入数量">
+        </div>
+    </div>
+
+            <div class=class="layui-form-item" style="margin-top: 30px;">
+                <label for="validity" class="layui-form-label">有效期至</label>
+                <div class="layui-input-block">
+                    <input type="text" id="validity" name="validity" class="layui-input" placeholder="请输入有效期">
+                </div>
+            </div>
+
+            <div class=class="layui-form-item" style="margin-top: 30px;">
+                <label for="price" class="layui-form-label">入库单价</label>
+                <div class="layui-input-block">
+                    <input type="text" id="price" name="price" class="layui-input" placeholder="请输入单价">
+                </div>
+            </div>
+
+        <div class=class="layui-form-item" style="margin-top: 30px;">
+            <label for="inman" class="layui-form-label">操作人</label>
+            <div class="layui-input-block">
+                <input type="text" id="inman" name="inman" class="layui-input" placeholder="请输入操作人">
+            </div>
+        </div>
+
+        <div class=class="layui-form-item" style="margin-top: 30px;">
+            <label for="incode" class="layui-form-label">批号</label>
+            <div class="layui-input-block">
+                <input type="text" id="incode" name="incode" class="layui-input" placeholder="请输入批号">
+            </div>
+        </div>
+
+        <div class=class="layui-form-item" style="margin-top: 30px;">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block">
+                <input type="submit" value="确认入库" class="layui-btn">
+            </div>
+        </div>
+            <script>
+                layui.use('laydate', function(){
+                    var laydate = layui.laydate;
+
+                    //执行一个laydate实例
+                    laydate.render({
+                        elem: '#validity' //指定元素
+                        ,format: 'yyyy-MM-dd HH:mm:ss'
+                        ,type: 'datetime'
+                    });
+                });
+            </script>
+        </fieldset>
+    </form>
+    {/block}
+
+

@@ -1,0 +1,114 @@
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <meta charset="UTF-8">
+    <title>{block name="title"}仓库管理系统{/block}</title>
+    <script src="http://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>
+    <script src="../layui/layui.all.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body>
+<div class="container pt-5 mt-5">
+    <div class="row align-items-center">
+        <div class="col-3 siadebar">
+            <button class="layui-btn layui-btn-normal" onclick="window.location.href = '/product/index'">产品字典</button>
+            <button class="layui-btn layui-btn-normal" onclick="window.location.href = '/product/create'">添加产品</button>
+            <button class="layui-btn layui-btn-normal" onclick="window.location.href = '/io/in'">入库</button>
+            <button class="layui-btn layui-btn-normal" onclick="window.location.href = '/io/out'">出库</button>
+            <button class="layui-btn layui-btn-normal" onclick="window.location.href = '/io/inHistory'">入库记录</button>
+            <button class="layui-btn layui-btn-normal" onclick="window.location.href = '/io/outHistory'">出库记录</button>
+            <button class="layui-btn layui-btn-normal" onclick="window.location.href = '/io/account'">账表</button>
+        </div>
+    </div>
+</div>
+
+<!--数据列表-->
+<table class="layui-table">
+    <div id="pro">
+    <thead class="bg-light">
+    <tr>
+        <th class="text-center" style="color: crimson;text-align: center;">编码</th>
+        <th class="text-center" style="color: crimson;text-align: center;">名称</th>
+        <th class="text-center" style="color: crimson;text-align: center;">规格</th>
+        <th class="text-center" style="color: crimson;text-align: center;">单位</th>
+        <th class="text-center" style="color: crimson;text-align: center;">单价</th>
+        <th class="text-center" style="color: crimson;text-align: center;">供货商</th>
+        <th class="text-center" style="color: crimson;text-align: center;">总库存</th>
+        <th class="text-center" style="color: crimson;text-align: center;">删除</th>
+    </tr>
+    </thead>
+    <tbody>
+    {assign name="empty" value='<tr><td colspan="7" class="text-center text-muted">没有数据</td></tr>'}
+    {volist name="list" id="obj" empty="$empty"}
+    <tr>
+        <td class="text-center" id="code" align="center" value="{$obj.code}">{$obj.code}</td>
+        <td class="text-center" id="name" align="center" value="{$obj.code}">{$obj.name}</td>
+        <td class="text-center" id="type" align="center" value="{$obj.code}">{$obj.type}</td>
+        <td class="text-center" id="unit" align="center" value="{$obj.code}">{$obj.unit}</td>
+        <td class="text-center" id="price" align="center" value="{$obj.code}">{$obj.price}</td>
+        <td class="text-center" id="sup" align="center" value="{$obj.code}">{$obj.sup}</td>
+        <td class="text-center" id="stock" align="center" value="{$obj.code}">{$obj.stock}</td>
+        <td class="text-center">
+            <form action="/product/delete" method="get">
+                <input type="hidden" name="code" value="{$obj.code}">
+                <button class="layui-btn layui-btn-danger" style="display:block;margin:0 auto" onclick="return confirm('确定将此产品删除?')">删除</button>
+            </form>
+        </td>
+    </tr>
+    {/volist}
+    </tbody>
+    </div>
+    <div id="laypage"></div>
+</table>
+<div class="layui-box layui-laypage layui-laypage-molv">
+    {$list|raw}
+</div>
+
+
+<script type="text/javascript">
+    //双击修改产品
+    $(function() {
+        $("td").dblclick(function() { //获取标签
+            var td = $(this);
+            var txt = td.text();
+            var field=$(this).attr('id');  //数据库对应字段
+            if (field == 'code'|field =='stock'){
+                return layer.msg('该项不允许修改', {time: 1000});
+            }
+            var code=$(this).attr('value');
+            var input = $("<input type='text' value='" + txt + "'/>");
+            td.html(input);
+            input.click(function() { return false; });
+            //获取焦点
+            input.trigger("focus");
+            input.blur(function() {
+                var newtxt = $(this).val();
+                if (newtxt != txt) {
+                    td.html(newtxt);
+                }
+                var data={
+                    id:code,
+                    name:field,
+                    value:newtxt
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "/product/doubleClickChange",
+                    data: data,
+                    success: function(){
+                        layer.msg('修改成功', {time: 1000})
+                    },
+                    dataType: 'json'
+                });
+            });
+        });
+
+    });
+</script>
+
+</body>
+</html>
+
+

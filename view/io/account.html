@@ -1,0 +1,44 @@
+{extend name="public/base"}
+
+{block name="title"}账表{/block}
+
+{block name="main"}
+<!--账表页面-->
+<table id="account" lay-filter="test"></table>
+
+<script src="/layui/layui.js"></script>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#account'
+            ,height: 889
+            ,url: '/io/list3' //数据接口
+            ,page: {
+                limit: 20
+            } //开启分页
+            ,cols: [[ //表头
+                {field: 'code', title: '编码', width:80, sort: true, fixed: 'left'}
+                ,{field: 'name', title: '名称', width:100}
+                ,{field: 'type', title: '规格', width:200}
+                ,{field: 'unit', title: '单位', width:100}
+                ,{field: 'price', title: '单价', width: 80}
+                ,{field: 'sup', title: '供应商', width: 200}
+                ,{field: 'validity', title: '有效期至', width: 280, sort: true}
+                ,{field: 'num', title: '数量', width: 200}
+                ,{field: 'man', title: '操作人', width: 80}
+                ,{field: 'time', title: '操作时间', width: 284, sort: true}
+                ,{field: 'incode', title: '入库批号', width: 200, sort: true}
+                ,{field: 'iotype', title: '操作类型', width: 100, sort: true}
+            ]]
+        });
+
+
+
+    });
+</script>
+
+{/block}
+

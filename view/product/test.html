@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!--测试layui-->
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.all.js"></script>
+    <script src="http://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>
+    <meta charset="UTF-8">
+    <title>测试</title>
+</head>
+<body>
+<table id="product" lay-filter="test"></table>
+
+<script src="/layui/layui.js"></script>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#product'
+            ,url: '/product/list' //数据接口
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {field: 'code', title: '编码', width:200, sort: true, fixed: 'left'}
+                ,{field: 'name', title: '名称', width:200}
+                ,{field: 'type', title: '规格', width:200}
+                ,{field: 'unit', title: '单位', width:200}
+                ,{field: 'price', title: '单价', width: 200, sort: true}
+                ,{field: 'sup', title: '供应商', width: 200}
+                ,{field: 'stock', title: '总库存', width: 200, sort: true}
+            ]]
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    //双击修改产品
+    $(function() {
+        $("td").dblclick(function() { //获取标签
+            var td = $(this);
+            var txt = td.text();
+            var field=$(this).attr('id');  //数据库对应字段
+            if (field == 'code'|field =='stock'){
+                return layer.msg('该项不允许修改', {time: 1000});
+            }
+            var code=$(this).attr('value');
+            var input = $("<input type='text' value='" + txt + "'/>");
+            td.html(input);
+            input.click(function() { return false; });
+            //获取焦点
+            input.trigger("focus");
+            input.blur(function() {
+                var newtxt = $(this).val();
+                if (newtxt != txt) {
+                    td.html(newtxt);
+                }
+                var data={
+                    id:code,
+                    name:field,
+                    value:newtxt
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "./product/doubleClickChange",
+                    data: data,
+                    success: function(){
+                        layer.msg('修改成功', {time: 1000})
+                    },
+                    dataType: 'json'
+                });
+            });
+        });
+
+    });
+</script>
+</body>
+</html>
+<!--入库记录页面-->
+<!--<table class="layui-table">-->
+<!--    <thead class="bg-light">-->
+<!--    <tr>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">编码</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">名称</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">规格</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">单位</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">单价</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">有效期至</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">供货商</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">入库量</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">入库人</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">入库时间</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">入库批号</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    {assign name="empty" value='<tr><td colspan="7" class="text-center text-muted">没有数据</td></tr>'}-->
+<!--    {volist name="list1" id="obj" empty="$empty"}-->
+<!--    <tr>-->
+<!--        <td class="text-center" align="center">{$obj.code}</td>-->
+<!--        <td class="text-center" align="center">{$obj.name}</td>-->
+<!--        <td class="text-center" align="center">{$obj.type}</td>-->
+<!--        <td class="text-center" align="center">{$obj.unit}</td>-->
+<!--        <td class="text-center" align="center">{$obj.price}</td>-->
+<!--        <td class="text-center" align="center">{$obj.validity}</td>-->
+<!--        <td class="text-center" align="center">{$obj.sup}</td>-->
+<!--        <td class="text-center" align="center">{$obj.innum}</td>-->
+<!--        <td class="text-center" align="center">{$obj.inman}</td>-->
+<!--        <td class="text-center" align="center">{$obj.intime}</td>-->
+<!--        <td class="text-center" align="center">{$obj.incode}</td>-->
+<!--    </tr>-->
+<!--    {/volist}-->
+<!--    </tbody>-->
+<!--</table>-->
+
+<!--<table class="layui-table">-->
+<!--    <thead class="bg-light">-->
+<!--    <tr>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">编码</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">名称</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">规格</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">单位</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">单价</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">供货商</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">出库量</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">出库人</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">出库时间</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    {assign name="empty" value='<tr><td colspan="7" class="text-center text-muted">没有数据</td></tr>'}-->
+<!--    {volist name="list2" id="obj" empty="$empty"}-->
+<!--    <tr>-->
+<!--        <td class="text-center" align="center">{$obj.code}</td>-->
+<!--        <td class="text-center" align="center">{$obj.name}</td>-->
+<!--        <td class="text-center" align="center">{$obj.type}</td>-->
+<!--        <td class="text-center" align="center">{$obj.unit}</td>-->
+<!--        <td class="text-center" align="center">{$obj.price}</td>-->
+<!--        <td class="text-center" align="center">{$obj.sup}</td>-->
+<!--        <td class="text-center" align="center">{$obj.outnum}</td>-->
+<!--        <td class="text-center" align="center">{$obj.outman}</td>-->
+<!--        <td class="text-center" align="center">{$obj.outtime}</td>-->
+<!--    </tr>-->
+<!--    {/volist}-->
+<!--    </tbody>-->
+<!--</table>-->
+
+
+
+<!--<table class="layui-table">-->
+<!--    <thead class="bg-light">-->
+<!--    <tr>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">编码</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">名称</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">规格</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">单位</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">单价</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">有效期至</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">供货商</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">数量</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">操作人</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">操作时间</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">入库批号</th>-->
+<!--        <th class="text-center" style="color: crimson;text-align: center;">操作类型</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    {assign name="empty" value='<tr><td colspan="7" class="text-center text-muted">没有数据</td></tr>'}-->
+<!--    {volist name="list3" id="obj" empty="$empty"}-->
+<!--    <tr>-->
+<!--        <td class="text-center" align="center">{$obj.code}</td>-->
+<!--        <td class="text-center" align="center">{$obj.name}</td>-->
+<!--        <td class="text-center" align="center">{$obj.type}</td>-->
+<!--        <td class="text-center" align="center">{$obj.unit}</td>-->
+<!--        <td class="text-center" align="center">{$obj.price}</td>-->
+<!--        <td class="text-center" align="center">{$obj.validity}</td>-->
+<!--        <td class="text-center" align="center">{$obj.sup}</td>-->
+<!--        <td class="text-center" align="center">{$obj.num}</td>-->
+<!--        <td class="text-center" align="center">{$obj.man}</td>-->
+<!--        <td class="text-center" align="center">{$obj.time}</td>-->
+<!--        <td class="text-center" align="center">{$obj.incode}</td>-->
+<!--        <td class="text-center" align="center">{$obj.iotype}</td>-->
+<!--    </tr>-->
+<!--    {/volist}-->
+<!--    </tbody>-->
+<!--</table>-->

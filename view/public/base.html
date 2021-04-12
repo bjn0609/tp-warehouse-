@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.all.js"></script>
+    <meta charset="UTF-8">
+    <title>{block name="title"}{/block}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+    
+<div class="container pt-5 mt-5">
+    <div class="row align-items-center">
+        <div class="col-3 siadebar">
+            <button class="layui-btn layui-btn-normal" onclick="window.location.href = '/product/index'">产品字典</button>
+            <button class="layui-btn layui-btn-normal" onclick="window.location.href = '/product/create'">添加产品</button>
+            <button class="layui-btn layui-btn-normal" onclick="window.location.href = '/io/in'">入库</button>
+            <button class="layui-btn layui-btn-normal" onclick="window.location.href = '/io/out'">出库</button>
+            <button class="layui-btn layui-btn-normal" onclick="window.location.href = '/io/inHistory'">入库记录</button>
+            <button class="layui-btn layui-btn-normal" onclick="window.location.href = '/io/outHistory'">出库记录</button>
+            <button class="layui-btn layui-btn-normal" onclick="window.location.href = '/io/account'">账表</button>
+        </div>
+        <div class="col-9 main">
+            {block name="main"}{/block}
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

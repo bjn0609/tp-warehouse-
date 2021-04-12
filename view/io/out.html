@@ -1,0 +1,51 @@
+
+{extend name="public/base"}
+
+{block name="title"}出库{/block}
+
+{block name="main"}
+
+<form action="/io/saveout" method="post" class="layui-form" style="width: 617px;">
+    <fieldset class="w-75">
+
+        <div class="layui-form-item" style="margin-top: 30px;">
+            <label for="code" class="layui-form-label">编码</label>
+            <div class="layui-input-block">
+                <input type="text" id="code" name="code" class="layui-input" placeholder="请输入编码">
+            </div>
+        </div>
+
+<!--        <div class="layui-form-item" style="margin-top: 30px;">-->
+<!--            <label for="price" class="layui-form-label">出库单价</label>-->
+<!--            <div class="layui-input-block">-->
+<!--                <input type="text" id="price" name="price" class="layui-input" placeholder="请输入单价">-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div class=class="layui-form-item" style="margin-top: 30px;">
+            <label for="outnum" class="layui-form-label">数量</label>
+            <div class="layui-input-block">
+                <input type="text" id="outnum" name="outnum" class="layui-input" placeholder="请输入数量">
+            </div>
+        </div>
+
+        <div class=class="layui-form-item" style="margin-top: 30px;">
+            <label for="outman" class="layui-form-label">操作人</label>
+            <div class="layui-input-block">
+                <input type="text" id="outman" name="outman" class="layui-input" placeholder="请输入操作人">
+            </div>
+        </div>
+
+
+
+        <div class=class="layui-form-item" style="margin-top: 30px;">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block">
+                <input type="submit" value="确认出库" class="layui-btn">
+            </div>
+        </div>
+    </fieldset>
+</form>
+{/block}
+
+
