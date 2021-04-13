@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2021-04-13 14:25:18
+Date: 2021-04-13 14:51:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,7 +24,7 @@ CREATE TABLE `crk_account` (
   `code` int(11) unsigned NOT NULL COMMENT '编码',
   `price` int(11) NOT NULL COMMENT '单价',
   `validity` datetime DEFAULT NULL COMMENT '有效期至',
-  `num` int(11) NOT NULL COMMENT '出入库数量(正数入库,负数出库)',
+  `num` int(11) NOT NULL COMMENT '出入库数量',
   `man` char(255) NOT NULL COMMENT '操作人',
   `time` datetime NOT NULL DEFAULT '2020-01-01 00:00:00' COMMENT '操作时间',
   `incode` int(10) unsigned NOT NULL COMMENT '入库批号',
@@ -42,7 +42,7 @@ CREATE TABLE `crk_in` (
   `code` int(11) unsigned NOT NULL COMMENT '编码',
   `price` int(11) NOT NULL COMMENT '单价',
   `validity` datetime NOT NULL DEFAULT '2020-01-01 00:00:00' COMMENT '有效期至',
-  `innum` int(11) NOT NULL COMMENT '出入库数量(正数入库,负数出库)',
+  `innum` int(11) NOT NULL COMMENT '数量',
   `inman` char(255) NOT NULL COMMENT '操作人',
   `intime` datetime NOT NULL DEFAULT '2020-01-01 00:00:00' COMMENT '操作时间',
   `incode` int(10) unsigned NOT NULL COMMENT '入库批号',
